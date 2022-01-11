@@ -1,12 +1,7 @@
 <?php
 class Conexion
 {
-    /* private $servername = "localhost:3307";
-    private $username = "root";
-    private $password = "";
-    private $dbname = "prueba_xaldigital";
-    private $charset = "utf8mb4"; */
-
+    #A traves del siguiente metodo nos conectamos a la base de datos diseñada para almacenar cada una de las tablas de la prueba
     static public function conectar()
     {
         try {

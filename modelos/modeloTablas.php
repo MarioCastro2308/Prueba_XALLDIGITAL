@@ -5,6 +5,12 @@ class ModeloTablas
 {
 
     #Lectura de registros
+
+    /*  Este Metodo  es utilizado para realizar distintos tipos de consulta dentro de las tablas de nuestra base de datos 
+     *  A traves de el, y dependiendo de los valores que enviemos como atributos, es posible consultar:
+     *      -Todos los registros de una tabla
+     *      -Una fila en particulas de alguna tabla
+     *      -Un registro especifico en la base de datos */
     static public function mdlSeleccionarRegistros($tabla, $item, $columna, $valor)
     {
         if ($item == null && $columna == null && $valor == null) {
@@ -28,7 +34,11 @@ class ModeloTablas
         }
     }
 
-    #Obtener el mas registro que mas se repita en una columna
+    # Obtencion del registro que mas se repite en una columna determinada
+
+    /* Este Metodo es utilizado constantemente para encontrar que registro 
+     * se repite mas en las distintas columnas de la tabla vuelo */
+
     static public function mdlObtenerMasRepetido($tabla, $item)
     {
         if ($item == "dia") {
@@ -43,7 +53,11 @@ class ModeloTablas
         return $stmt->fetch();
     }
 
-    #Obtiene los registros repetidos de la tabla vuelos que en total sumen mas de dos registros
+    #Obtencion de los registros repetidos de la tabla vuelos que en total sumen mas de dos registros
+
+    /* Este metodo es uno de los dos metodos que ayudan a resolver el cuarto punto de la actividad SQL
+     * El metodo selecciona aquellos elementos que se repitan mas de dos veces
+     * ES utilizado para hallar el id de las aerolineas que se repitan una cantidad mayor a dos */
     static public function mdlObtenerRegistrosMayoresADos($item)
     {
         $stmt = Conexion::conectar()->prepare("SELECT $item FROM `vuelos` 
@@ -53,7 +67,10 @@ class ModeloTablas
         return $stmt->fetchAll();
     }
 
-    #Obtener, de los registros repetidos mas de dos veces, la cantidad de veces que se repite un cada dia en que se realizo un vuelo
+    #Obtencion de la cantidad de registros que compartan un mismo dia
+
+    /* Este es el segundo metodo utilizado para encontrar las aerolineas que hayan realizado mas de dos vuelos en un mismo dia
+     * El metodo devulve el dia y la cantidad de veces que se repite segun la lista de ids obtenidos con el metodo mdlObtenerRegistrosMAyoresADos()  */
     static public function mdlObtenerRegistrosPorDia($item)
     {
         $stmt = Conexion::conectar()->prepare("SELECT `dia`, COUNT(`dia`) AS total FROM `vuelos` WHERE `id_aerolinea` = $item
